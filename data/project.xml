@@ -1,0 +1,39 @@
+<project type="bio">
+  <property name="target.model" value="genomic"/>
+  <property name="common.os.prefix" value="common"/>
+  <property name="intermine.properties.file" value="sndmine.properties"/>
+  <property name="default.intermine.properties.file" location="../default.intermine.integrate.properties"/>
+
+  <sources>
+    <source name="gff" type="gff">
+      <property name="gff3.taxonId" value="36329"/>
+      <property name="gff3.seqDataSourceName" value="SndMineDB"/>
+      <property name="gff3.dataSourceName" value="SndMineDB"/>
+      <property name="gff3.seqClsName" value="Chromosome"/>
+      <property name="gff3.dataSetTitle" value="SndMine"/>
+      <property name="src.data.dir" location="DATA_DIR/sndmine/genome/gff"/>
+    </source>
+    <source name="chromosome-fasta" type="fasta" dump="true">
+      <property name="fasta.className" value="org.intermine.model.bio.Chromosome"/>
+      <property name="fasta.dataSourceName" value="PlasmoDB"/>
+      <property name="fasta.dataSetTitle" value="PlasmoDB chromosome sequence"/>
+      <property name="fasta.taxonId" value="36329"/>
+      <property name="fasta.includes" value="MAL*.fasta"/>
+      <property name="src.data.dir" location="DATA_DIR/sndmine/genome/fasta"/>
+    </source>
+  </sources>
+
+  <post-processing>
+    <post-process name="create-references"/>
+    <post-process name="transfer-sequences" dump="true"/>
+
+    <!-- this runs the postprocessing steps in all sources -->
+    <post-process name="do-sources"/>
+
+    <post-process name="summarise-objectstore"/>
+    <post-process name="create-autocomplete-index"/>
+    <post-process name="create-search-index"/>
+  </post-processing>
+
+</project>
+
